@@ -1,5 +1,4 @@
 import { GetServerSideProps } from "next";
-import Image from "next/image";
 import { createClient } from "@supabase/supabase-js";
 import { env } from "process";
 import prisma from "../utils/prisma";
@@ -48,19 +47,20 @@ export default function Ranking(props:Props) {
     return (
         <div>
             <Hedder/>
-            <div className=" flex flex-col text-center items-center">
-                <div>観光名所ランキング</div>
+            <div className=" flex flex-col text-center items-center text-lg">
+                <div className=" font-bold text-2xl">観光名所ランキング</div>
                 <div className=" flex flex-col">
                     {monumentArray.map((value,key)=>{
                         return(
                             <div key={key} className=" flex text-left items-start bg-primary mt-5">
-                                <div className=" m-auto">{key+1}位</div>
+                                <div className=" m-auto px-8 font-bold">{key+1}位</div>
                                 <a href={"/"+value.id} className=" w-64 h-32 relative">
                                     <img src={"https://bwyhjohrujadlhmubmwd.supabase.co/storage/v1/object/public/image/"+value.image} className=' w-full h-full object-contain absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'/>
                                 </a>
                                 <div className=" w-[30rem] m-auto">
-                                    <div>{value.name}</div>
-                                    <div>いいね:{value.like.length.toString()}</div>
+                                    <div className=" mb-2 text-xl">{value.name}</div>
+                                    <div><span className=" font-bold">作者</span> : {value.autherName}</div>
+                                    <div><span className=" font-bold">いいね</span> : {value.like.length.toString()}</div>
                                 </div>
                             </div>
                         )

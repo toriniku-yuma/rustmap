@@ -41,17 +41,18 @@ export default function Catalog(props:Props) {
     return (
         <div>
             <Hedder/>
-            <div className='container mx-auto w-3/5'>
+            <div className='container mx-auto w-3/5 text-lg'>
+              <div className=" text-2xl font-bold my-4 text-center">カタログ</div>
                 <div className="grid grid-cols-3 gap-3">
                     {props.body.map((value,index)=>{
                             return(
-                                <a href={"/"+value.id} key={index} className="col-span-1 bg-slate-400 bg-opacity-30 h-48 shadow sm:rounded-lg flex flex-col">
+                                <a href={"/"+value.id} key={index} className="col-span-1 bg-slate-400 bg-opacity-30 h-fit shadow sm:rounded-lg flex flex-col">
                                     {value.image &&(
-                                      <div className="w-64 h-32 relative">
+                                      <div className="w-64 h-32 relative mt-4 mx-auto">
                                         <img className="w-full h-full object-contain" src={"https://bwyhjohrujadlhmubmwd.supabase.co/storage/v1/object/public/image/"+value.image}/>
                                       </div>
                                     )}
-                                    <div className=" text-center mt-4">{value.name}</div>
+                                    <div className=" text-center mt-4 truncate">{value.name}</div>
                                     <div className=" text-center">いいね {value.like.length.toString()}</div>
                                 </a>
                             )
