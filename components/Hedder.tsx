@@ -3,8 +3,8 @@ import { useEffect } from "react";
 export default function Hedder() {
     return (
         <div>
-            <div className=" bg-base-300 flex justify-between" id="hedder">
-                <div>Rustスラム街サーバー観光マップるるぶ</div>
+            <div className=" bg-base-300 flex md:justify-between justify-end md:text-base text-xs" id="hedder">
+                <div className="md:block hidden">Rustスラム街サーバー観光マップるるぶ</div>
                 <div>
                     <a href="/" className=" mr-4">トップページ</a>
                     <a href="/Map" className=" mr-4">マップ</a>

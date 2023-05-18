@@ -25,6 +25,7 @@ export const getServerSideProps:GetServerSideProps = async() =>{
         id:"desc"
       },
       select:{
+        id:true,
         name:true,
         position:true
       }
@@ -61,8 +62,10 @@ export default function Map(props:Props) {
                 const positionXY = [value.position[0] * element.clientWidth,value.position[1] * element.clientHeight]
                 return(
                   <div key={key}>
-                    <Image src={"/pin_red.png"} alt="" width={30} height={30} className=" absolute" 
-                    style={{top:positionXY[1]-25+"px",left:positionXY[0]-14+"px"}}/>
+                    <a href={"/" + value.id}>
+                      <Image src={"/pin_red.png"} alt="" width={30} height={30} className=" absolute" 
+                      style={{top:positionXY[1]-25+"px",left:positionXY[0]-14+"px"}}/>
+                    </a>
                     <div className=" absolute text-gray-400" style={{top:positionXY[1]-40+"px",left:positionXY[0]-20+"px"}}>{value.name}</div>
                   </div>
                 )

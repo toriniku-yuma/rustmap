@@ -53,11 +53,11 @@ export default function Ranking(props:Props) {
                     {monumentArray.map((value,key)=>{
                         return(
                             <div key={key} className=" flex text-left items-start bg-primary mt-5">
-                                <div className=" m-auto px-8 font-bold">{key+1}位</div>
-                                <a href={"/"+value.id} className=" w-64 h-32 relative">
+                                <div className=" m-auto px-[2vw] font-bold">{key+1}位</div>
+                                <a href={"/"+value.id} className=" sm:w-64 sm:h-[9rem] w-[8rem] h-[4.5rem] relative">
                                     <img src={"https://bwyhjohrujadlhmubmwd.supabase.co/storage/v1/object/public/image/"+value.image} className=' w-full h-full object-contain absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'/>
                                 </a>
-                                <div className=" w-[30rem] m-auto">
+                                <div className=" w-[40vw] m-auto">
                                     <div className=" mb-2 text-xl">{value.name}</div>
                                     <div><span className=" font-bold">作者</span> : {value.autherName}</div>
                                     <div><span className=" font-bold">いいね</span> : {value.like.length.toString()}</div>
