@@ -56,6 +56,7 @@ const Monument = (props:Props) => {
   const [likeBool,setLikeBool] = useState<boolean>(false)
   const [positionXY,setPositionXY] = useState<number[]>([])
   const [deleteBool,setDeleteBool] = useState<boolean>(false)
+  const [rendering,setRendering] = useState<number>();
   const descriptionURL = ()=>{return(<div>{reactStringReplace(description,/(https?:\/\/\S+)/g,(match,i)=>(<img key={i} src={match} className=' max-w-[50%] inline-block mt-2'></img>))}</div>)}
   useEffect(()=>{
     const getUUID = localStorage.getItem("UUID");
@@ -90,6 +91,9 @@ const Monument = (props:Props) => {
       }else{
         return [0,0]
       }
+    })
+    window.addEventListener("resize",()=>{
+      setRendering(Math.random())
     })
   },[])
   async function likeButton(){
@@ -139,7 +143,7 @@ const Monument = (props:Props) => {
           </div>
           <div>
             <div className=' w-[24rem] h-[24rem] bg-secondary relative'>
-              <Image src={"/pin_yellow.png"} alt="" width={30} height={30} className=" absolute z-10" 
+              <Image src={"/pin_red.png"} alt="" width={30} height={30} className=" absolute z-10" 
               style={{top:positionXY[1]-25+"px",left:positionXY[0]-14+"px"}}/>
               <Image src="/map.png" alt="" width={384} height={384} id='map'/>
             </div>
@@ -147,7 +151,7 @@ const Monument = (props:Props) => {
             <div className=' mb-2'><span className=' font-bold'>住所</span>:{address}</div>
             <div className=' flex justify-center'>
               {likeBool
-                ?<button className='btn btn-success no-animation'>いいね {likeLength.toString()}</button>
+                ?<button className='btn btn-success no-animation'>いいね済み {likeLength.toString()}</button>
                 :<button className='btn btn-secondary' onClick={likeButton}>いいね {likeLength.toString()}</button>}
               {deleteBool&&<label htmlFor="my-modal" className='btn btn-error ml-3'>!記事を消去!</label>}
             </div>

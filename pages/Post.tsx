@@ -14,6 +14,7 @@ export default function Post() {
     const [monumentDescription,setMonumentDescription] = useState<string>("");
     const [errorMessage,setErrorMessage] = useState<string>();
     const [height,setHeight] = useState<number>();
+    const [rendering,setRendering] = useState<number>();
     let positionSetX = 0;
     let positionSetY = 0;
     let [subPosition,setSubPosition] = useState<number[]>([]);
@@ -25,6 +26,9 @@ export default function Post() {
           setSubPosition([(e.offsetX),(e.offsetY)]);
         })
       }
+      window.addEventListener("resize",()=>{
+        setRendering(Math.random())
+      })
     },[])
     useEffect(()=>{
       if(errorMessage){
@@ -107,8 +111,8 @@ export default function Post() {
     return (
       <div>
         <Hedder/>
-        <div className=" flex flex-col text-center items-center">
-            <div className="">Rust観光地投稿フォーム</div>
+        <div className=" flex flex-col text-center items-center text-lg">
+            <div className="text-2xl my-4">Rust観光地投稿フォーム</div>
             <div className="form-control w-full max-w-md">
               <label className="label">
                 <span className="label-text text-lg">観光地名</span>
@@ -149,7 +153,7 @@ export default function Post() {
                 <textarea placeholder="" className="textarea textarea-bordered h-36 w-full max-w-2xl" 
                 onChange={(e)=>setMonumentDescription(e.target.value)}/>
             </div>
-            <div className=" text-lg">マップ座標</div>
+            <div className=" text-xl my-4">マップ座標</div>
             <div className="relative">
                 {position&&<Image src={"/pin_yellow.png"} alt="" width={30} height={30} className=" absolute" 
                 style={{top:positionSetY-25+"px",left:positionSetX-14+"px"}}/>}

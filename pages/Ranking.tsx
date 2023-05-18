@@ -48,7 +48,7 @@ export default function Ranking(props:Props) {
         <div>
             <Hedder/>
             <div className=" flex flex-col text-center items-center text-lg">
-                <div className=" font-bold text-2xl">観光名所ランキング</div>
+                <div className=" font-bold text-2xl my-4">観光名所ランキング</div>
                 <div className=" flex flex-col">
                     {monumentArray.map((value,key)=>{
                         return(

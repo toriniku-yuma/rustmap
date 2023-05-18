@@ -1,26 +1,76 @@
 import { GetServerSideProps } from "next"
 import Image from "next/image"
-import { Props } from "../components/PropsType"
 import Hedder from "../components/Hedder"
+import prisma from "../utils/prisma"
+import { useEffect, useState } from "react"
+
+type Props = {
+  body:{
+    id:number
+    name:string
+    address:string
+    description:string
+    image:string
+    autherName:string
+    position:number[]
+    like:string[]
+    UUID:string
+  }[],
+  imageURL:string
+}
 
 export const getServerSideProps:GetServerSideProps = async() =>{
-  return{
-    props:{
-      id:[0,1,2],
-      image:["ロゴ.jpg","map.png","next.svg"],
-      name:["かんこう1","かんこう2","かんこう3"],
-      like:[12,30,25]
+    const monument = await prisma.post.findMany({
+      orderBy:{
+        id:"desc"
+      },
+      select:{
+        name:true,
+        position:true
+      }
+    })
+    return {
+      props:{
+        body:monument
     }
   }
 }
 
 export default function Map(props:Props) {
+    const [element,setElement] = useState<HTMLElement>();
+    const [rendering,setRendering] = useState<number>();
+    useEffect(()=>{
+      console.log(props.body)
+      const mapElement = document.getElementById("map");
+      if(mapElement){
+        setElement(mapElement);
+      }
+      window.addEventListener("resize",()=>{
+        setRendering(Math.random())
+      })
+    },[])
     return (
       <div>
         <Hedder/>
         <div className=" flex flex-col text-center items-center">
-          <div className="">Rustスラム街サーバーMAP</div>
-          <Image src="/map.png" alt="" width={1200} height={1200}/>
+          <div className="text-2xl my-4">Rustスラム街サーバーMAP</div>
+          <div className=" relative">
+            <Image src="/map.png" alt="" width={1200} height={1200} id="map"/>
+            {props.body.map((value,key)=>{
+              if(element){
+                const positionXY = [value.position[0] * element.clientWidth,value.position[1] * element.clientHeight]
+                return(
+                  <div key={key}>
+                    <Image src={"/pin_red.png"} alt="" width={30} height={30} className=" absolute" 
+                    style={{top:positionXY[1]-25+"px",left:positionXY[0]-14+"px"}}/>
+                    <div className=" absolute text-gray-400" style={{top:positionXY[1]-40+"px",left:positionXY[0]-20+"px"}}>{value.name}</div>
+                  </div>
+                )
+              }else{
+                return
+              }
+            })}
+          </div>
         </div>
       </div>
     )
