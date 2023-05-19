@@ -50,7 +50,7 @@ export default function Post() {
         <div className=" flex flex-col text-center items-center text-lg">
             <div className="text-2xl my-4">スラム鯖思い出写真館</div>
             <div className="form-control w-full max-w-2xl">
-              <label className="label">
+              <label className="label flex-col">
                 <span className="label-text text-lg">画像URLのみ受付、空白、改行で区切って複数投稿可能</span>
                 <span className="label-text text-lg">Discordの個人鯖等にアップロードして画像を右クリック「リンクをコピー」</span>
                 <span className="label-text text-lg">してペーストすると貼ることが出来ます</span>

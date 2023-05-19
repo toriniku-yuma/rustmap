@@ -96,7 +96,7 @@ export default function Memorial(props:Props) {
           }else{
             return(
               <div key={key}>
-                <img src={value.image} className={` w-[50vw] mb-4 inline-block ${leftOrRight}`}/>
+                <img src={value.image} className={` w-[70vw] mb-4 inline-block ${leftOrRight}`}/>
               </div>
             )
           }
