@@ -22,3 +22,9 @@ model Post {
   address      String
   updatedAt    DateTime         @updatedAt
 }
+
+model Memorial {
+  id           Int              @id @default(autoincrement())
+  image        String[]
+  UUID         String
+}
