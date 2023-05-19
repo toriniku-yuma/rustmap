@@ -102,7 +102,7 @@ export default function Memorial(props:Props) {
           }
         })}</div>
       </div>
-      <a href="/MemorialPost" className="btn btn-info btn-lg fixed top-20 right-24">投稿はこちら</a>
+      <a href="/MemorialPost" className="btn btn-info lg:btn-lg md:btn-md btn-sm fixed md:top-20 top-10 right-[5vw]">投稿はこちら</a>
       <input type="checkbox" id="my-modal" className="modal-toggle" />
       <div className="modal">
         <div className="modal-box">
