@@ -1,7 +1,7 @@
 import { GetServerSideProps } from "next"
 import Image from "next/image"
-import Hedder from "../components/Hedder"
-import prisma from "../utils/prisma"
+import Hedder from "../../components/Hedder"
+import prisma from "../../utils/prisma"
 import { useEffect, useState } from "react"
 
 type Props = {
@@ -62,7 +62,7 @@ export default function Map(props:Props) {
                 const positionXY = [value.position[0] * element.clientWidth,value.position[1] * element.clientHeight]
                 return(
                   <div key={key}>
-                    <a href={"/" + value.id}>
+                    <a href={"/2305/" + value.id}>
                       <Image src={"/pin_red.png"} alt="" width={30} height={30} className=" absolute" 
                       style={{top:positionXY[1]-25+"px",left:positionXY[0]-14+"px"}}/>
                     </a>

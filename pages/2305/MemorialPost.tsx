@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import Hedder from "../components/Hedder";
+import Hedder from "../../components/Hedder";
 import { gsap } from "gsap";
 
 export default function Post() {

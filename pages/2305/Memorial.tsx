@@ -1,6 +1,6 @@
 import { GetServerSideProps } from "next"
-import Hedder from "../components/Hedder"
-import prisma from "../utils/prisma"
+import Hedder from "../../components/Hedder"
+import prisma from "../../utils/prisma"
 import { useEffect, useState } from "react"
 
 type MemorialArray ={

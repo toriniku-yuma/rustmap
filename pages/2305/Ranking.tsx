@@ -1,8 +1,8 @@
 import { GetServerSideProps } from "next";
 import { createClient } from "@supabase/supabase-js";
 import { env } from "process";
-import prisma from "../utils/prisma";
-import Hedder from "../components/Hedder";
+import prisma from "../../utils/prisma";
+import Hedder from "../../components/Hedder";
 
 type Props = {
     body:{
@@ -54,7 +54,7 @@ export default function Ranking(props:Props) {
                         return(
                             <div key={key} className=" flex text-left items-start bg-primary mt-5">
                                 <div className=" m-auto px-[2vw] font-bold">{key+1}位</div>
-                                <a href={"/"+value.id} className=" sm:w-64 sm:h-[9rem] w-[8rem] h-[4.5rem] relative">
+                                <a href={"/2305/"+value.id} className=" sm:w-64 sm:h-[9rem] w-[8rem] h-[4.5rem] relative">
                                     <img src={"https://bwyhjohrujadlhmubmwd.supabase.co/storage/v1/object/public/image/"+value.image} className=' w-full h-full object-contain absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'/>
                                 </a>
                                 <div className=" w-[40vw] m-auto">

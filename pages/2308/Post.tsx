@@ -1,9 +1,8 @@
 import { GetServerSideProps } from "next"
 import Image from "next/image"
-import { Props } from "../components/PropsType"
 import { useEffect, useRef, useState } from "react"
-import Hedder from "../components/Hedder";
 import { gsap } from "gsap";
+import Hedder2 from "../../components/Hedder2";
 
 export default function Post() {
     const [position,setPosition] = useState<number[]|undefined>(undefined);
@@ -110,7 +109,7 @@ export default function Post() {
     }
     return (
       <div>
-        <Hedder/>
+        <Hedder2/>
         <div className=" flex flex-col text-center items-center text-lg">
             <div className="text-2xl my-4">Rust観光地投稿フォーム</div>
             <div className="form-control w-full max-w-md">

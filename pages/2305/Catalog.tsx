@@ -1,6 +1,6 @@
 import { GetServerSideProps } from "next";
-import prisma from "../utils/prisma";
-import Hedder from "../components/Hedder";
+import prisma from "../../utils/prisma";
+import Hedder from "../../components/Hedder";
 
 type Props = {
     body:{
@@ -46,7 +46,7 @@ export default function Catalog(props:Props) {
                 <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3">
                     {props.body.map((value,index)=>{
                             return(
-                                <a href={"/"+value.id} key={index} className="col-span-1 bg-slate-400 bg-opacity-30 h-fit shadow rounded-lg flex flex-col">
+                                <a href={"/2305/"+value.id} key={index} className="col-span-1 bg-slate-400 bg-opacity-30 h-fit shadow rounded-lg flex flex-col">
                                     {value.image &&(
                                       <div className="lg:w-[25vw] lg:h-[16.8vw] md:w-[35vw] md:h-[19.7vw] relative mt-4 mx-auto">
                                         <img className="w-full h-full object-contain" src={"https://bwyhjohrujadlhmubmwd.supabase.co/storage/v1/object/public/image/"+value.image}/>

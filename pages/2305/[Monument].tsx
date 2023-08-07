@@ -1,12 +1,12 @@
 import { GetServerSideProps } from 'next';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
-import prisma from '../utils/prisma';
-import { Props } from '../components/PropsType';
+import prisma from '../../utils/prisma';
+import { Props } from '../../components/PropsType';
 import { createClient } from '@supabase/supabase-js';
 import { env } from 'process';
 import reactStringReplace from 'react-string-replace';
-import Hedder from '../components/Hedder';
+import Hedder from '../../components/Hedder';
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const supabase = createClient(env.NEXT_PUBLIC_SUPABASE_URL,env.NEXT_PUBLIC_SUPABASE_ANON_KEY);

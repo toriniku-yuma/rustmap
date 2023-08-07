@@ -1,4 +1,4 @@
-export default function Hedder() {
+export default function Hedder2() {
     return (
         <div>
             <div className=" bg-base-300 flex md:justify-between justify-end md:text-base text-xs" id="hedder">
