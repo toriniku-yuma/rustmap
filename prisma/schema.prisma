@@ -28,3 +28,19 @@ model Memorial {
   image        String[]
   UUID         String
 }
+
+model TownMap2308 {
+  id           Int              @id @default(autoincrement())
+  userName     String
+  playerName   String
+  steamName    String
+  address      String
+  phoneNumber  String
+  description  String
+  SNS          String
+  image        String
+  position     Float[]           
+  UUID         String
+  like         String[]         @default([])
+  updateAt     DateTime         @updatedAt
+}

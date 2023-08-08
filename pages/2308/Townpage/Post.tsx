@@ -1,15 +1,20 @@
 import Image from "next/image"
-import { useEffect, useRef, useState } from "react"
-import Hedder from "../../components/Hedder"
+import { useEffect,useState } from "react"
 import { gsap } from "gsap";
+import Hedder2 from "../../../components/Hedder2";
+import postTownMap2308 from "../../api/2308/postTwonpage";
+import { unstable_renderSubtreeIntoContainer } from "react-dom";
 
 export default function Post() {
     const [position,setPosition] = useState<number[]|undefined>(undefined);
-    const [monumentName,setMonumentName] = useState<string>("");
+    const [userName,setUserName] = useState<string>("");
+    const [steamName,setSteamName] = useState<string>("");
     const [address,setAddress] = useState<string>("");
-    const [authorName,setAutherName] = useState<string>("");
+    const [phoneNumber,setPhoneNumber] = useState<string>("");
+    const [playerName,setPlayerName] = useState<string>("");
     const [monumentPhoto,setMonumentPhoto] = useState<File>();
-    const [monumentDescription,setMonumentDescription] = useState<string>("");
+    const [description,setDescription] = useState<string>("");
+    const [SNS,setSNS] = useState<string>("");
     const [errorMessage,setErrorMessage] = useState<string>();
     const [height,setHeight] = useState<number>();
     const [rendering,setRendering] = useState<number>();
@@ -52,21 +57,31 @@ export default function Post() {
 
     async function postClick(){
       const fd = new FormData;
-      fd.append("name",monumentName);
-      if(monumentName === ""){
-        setErrorMessage("観光地名が入っていません")
+      fd.append("userName",userName);
+      if(userName === ""){
+        setErrorMessage("名前が入っていません")
         console.log("not monumentName")
         return
       }
-      fd.append("autherName",authorName);
-      if(authorName === ""){
-        setErrorMessage("作者名が入っていません")
+      fd.append("playerName",playerName);
+      if(playerName === ""){
+        setErrorMessage("ゲーム内での名前が入っていません")
         return
       }
-      fd.append("address",address);
-      if(address === ""){
-        setErrorMessage("住所が入っていません")
+      fd.append("steamName",steamName);
+      if(steamName === ""){
+        setErrorMessage("Steam64IDが入っていません")
         return
+      }
+      if(address === ""){
+        fd.append("address","")
+      }else{
+        fd.append("address",address);
+      }
+      if(phoneNumber === ""){
+        fd.append("phoneNumber","")
+      }else{
+        fd.append("phoneNumber",phoneNumber);
       }
       if(monumentPhoto){
         if(monumentPhoto.type.match("image.*")){
@@ -76,13 +91,17 @@ export default function Post() {
           return
         }
       }else{
-        setErrorMessage("画像が入っていません")
-        return
+        fd.append("image","")
       }
-      fd.append("description",monumentDescription);
-      if(monumentDescription === ""){
+      fd.append("description",description);
+      if(description === ""){
         setErrorMessage("説明文が入っていません")
         return
+      }
+      if(SNS === ""){
+        fd.append("SNS","")
+      }else{
+        fd.append("SNS",SNS);
       }
       fd.append("position",JSON.stringify(position));
       if(!position){
@@ -91,7 +110,7 @@ export default function Post() {
       }
       const uuid = localStorage.getItem("UUID");
       fd.append("UUID",JSON.stringify({value:uuid}));
-      const res = await fetch("./api/post",{
+      const res = await fetch("../../api/2308/postTwonpage",{
         method:"POST",
         body:fd
       })
@@ -108,22 +127,32 @@ export default function Post() {
     }
     return (
       <div>
-        <Hedder/>
+        <Hedder2/>
         <div className=" flex flex-col text-center items-center text-lg">
-            <div className="text-2xl my-4">Rust観光地投稿フォーム</div>
+            <div className="text-2xl my-4">タウンページ登録フォーム</div>
             <div className="form-control w-full max-w-md">
               <label className="label">
-                <span className="label-text text-lg">観光地名</span>
+                <span className="label-text text-lg">名前 ※</span>
               </label>
                 <input type="text" placeholder="" className="input input-bordered w-full max-w-md" 
-                onChange={(e)=>setMonumentName(e.target.value)}/>
+                onChange={(e)=>setUserName(e.target.value)}/>
             </div>
             <div className="form-control w-full max-w-md">
               <label className="label">
-                <span className="label-text text-lg">制作者名</span>
+                <span className="label-text text-lg">ゲーム内での名前（Steamアカウント名）※</span>
               </label>
                 <input type="text" placeholder="" className="input input-bordered w-full max-w-md" 
-                onChange={(e)=>setAutherName(e.target.value)}/>
+                onChange={(e)=>setPlayerName(e.target.value)}/>
+            </div>
+            <div className="form-control w-full max-w-md">
+              <label className="label">
+                <span className="label-text text-lg">ID（Steam64ID）※</span>
+              </label>
+              <label className="label">
+                <span className="label-text underline"><a href="https://volx.jp/steam-id-steamid64-check" target="_blank" rel="noopener">詳しくはこちら</a></span>
+              </label>
+                <input type="text" placeholder="" className="input input-bordered w-full max-w-md" 
+                onChange={(e)=>setSteamName(e.target.value)}/>
             </div>
             <div className="form-control w-full max-w-md">
               <label className="label">
@@ -134,7 +163,14 @@ export default function Post() {
             </div>
             <div className="form-control w-full max-w-md">
               <label className="label">
-                <span className="label-text text-lg">観光地紹介写真（2MBまで）</span>
+                <span className="label-text text-lg">電話番号</span>
+              </label>
+                <input type="text" placeholder="" className="input input-bordered w-full max-w-md" 
+                onChange={(e)=>setPhoneNumber(e.target.value)}/>
+            </div>
+            <div className="form-control w-full max-w-md">
+              <label className="label">
+                <span className="label-text text-lg">自宅紹介写真（2MBまで）</span>
               </label>
                 <input type="file" className="file-input file-input-bordered w-full max-w-md" accept="image/*"
                 onChange={(e)=>
@@ -146,12 +182,19 @@ export default function Post() {
             </div>
             <div className="form-control w-full max-w-2xl">
               <label className="label">
-                <span className="label-text text-lg">観光地説明（外部にアップロードした画像URLを入れると画像が表示できます）</span>
+                <span className="label-text text-lg">自己紹介（外部にアップロードした画像URLを入れると画像が表示できます） ※</span>
               </label>
                 <textarea placeholder="" className="textarea textarea-bordered h-36 w-full max-w-2xl" 
-                onChange={(e)=>setMonumentDescription(e.target.value)}/>
+                onChange={(e)=>setDescription(e.target.value)}/>
             </div>
-            <div className=" text-xl my-4">マップ座標</div>
+            <div className="form-control w-full max-w-2xl">
+              <label className="label">
+                <span className="label-text text-lg">SNSアカウント（DiscordやX（旧Twitter）、配信場所など）</span>
+              </label>
+                <textarea placeholder="" className="textarea textarea-bordered h-36 w-full max-w-2xl" 
+                onChange={(e)=>setSNS(e.target.value)}/>
+            </div>
+            <div className=" text-xl my-4">マップ座標 ※</div>
             <div className="relative">
                 {position&&<Image src={"/pin_yellow.png"} alt="" width={30} height={30} className=" absolute" 
                 style={{top:positionSetY-25+"px",left:positionSetX-14+"px"}}/>}

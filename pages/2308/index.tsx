@@ -9,6 +9,7 @@ export default function Home() {
         <div className=" text-3xl my-4">Rustスラム街サーバー 2308</div>
         <img src="/ロゴ.jpg" className=" w-[30rem]"/>
         <div className=" flex md:flex-row flex-col mt-4">
+          <a href="/2308/Townpage" className=" mr-4">タウンページ</a>
           <a href="/2308/Map" className=" mr-4">マップ</a>
           <a href="/2308/Ranking" className=" mr-4">人気ランキング</a>
           <a href="/2308/Catalog" className=" mr-4">カタログ</a>
