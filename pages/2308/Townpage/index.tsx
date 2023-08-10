@@ -3,6 +3,7 @@ import Hedder2 from "../../../components/Hedder2";
 import { GetServerSideProps } from "next";
 import { env } from "process";
 import prisma from "../../../utils/prisma";
+import Link from "next/link";
 
 export const getServerSideProps:GetServerSideProps = async() =>{
   const supabase = createClient(env.NEXT_PUBLIC_SUPABASE_URL,env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
@@ -54,7 +55,9 @@ export default function Ranking(props:Props) {
                   {monumentArray.map((value,key)=>{
                     return(
                       <div key={key} className=" flex text-left items-start mt-5">
-                        <a href={"/2308/Townpage/"+value.id} className="mr-4">{value.userName}</a>
+                        <Link href={"/2308/Townpage/"+value.id} legacyBehavior>
+                          <a className="mr-4">{value.userName}</a>
+                        </Link>
                         <div className="mr-4">{value.playerName}</div>
                         <div className="mr-4">{value.group}</div>
                         <div className="mr-4">{value.address}</div>

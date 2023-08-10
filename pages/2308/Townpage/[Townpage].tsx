@@ -7,6 +7,7 @@ import { createClient } from '@supabase/supabase-js';
 import { env } from 'process';
 import reactStringReplace from 'react-string-replace';
 import Hedder2 from '../../../components/Hedder2';
+import Link from 'next/link';
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const supabase = createClient(env.NEXT_PUBLIC_SUPABASE_URL,env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
@@ -151,7 +152,9 @@ const Monument = (props:Props) => {
                     <label htmlFor="my-modal" className='btn btn-error ml-3'>!記事を消去!</label>
                   </div>
                   <div>
-                    <a href={`./Post?mode=edit&id=${id}`} className='btn btn-success ml-3'>内容を変更</a>
+                  <Link href={`./Post?mode=edit&id=${id}`} legacyBehavior>
+                  <a className='btn btn-success ml-3'>内容を変更</a>
+                  </Link>
                   </div>
                 </>}
             </div>
