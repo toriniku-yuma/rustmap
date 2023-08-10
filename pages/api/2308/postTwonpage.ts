@@ -24,9 +24,11 @@ export default async function postTownMap2308(req:NextApiRequest,res:NextApiResp
             }))
             return
         }else{
-            let {userName,playerName,steamName,address,phoneNumber,description,SNS,position,UUID} = fields;
+            console.log(fields);
+            console.log(files)
+            let {update,userName,playerName,steamName,address,phoneNumber,description,SNS,position,UUID} = fields;
             let image:string;
-            if(!fields.image){
+            if(typeof fields.image !== "string"){
                 const imagedata = files.image as formidable.File;
                 if(!imagedata){
                     res.send(JSON.stringify({
@@ -56,15 +58,7 @@ export default async function postTownMap2308(req:NextApiRequest,res:NextApiResp
                 }
                 image = imagedata.newFilename;
             }else{
-                if(fields.image === ""){
-                    image = "";
-                }else{
-                    res.send(JSON.stringify({
-                        type:"error",
-                        body:"画像フォームに不正な入力があります"
-                    }))
-                    return
-                }
+                image = fields.image as string;
             }
             if(typeof position === "string"){
                 position = JSON.parse(position)
@@ -88,24 +82,44 @@ export default async function postTownMap2308(req:NextApiRequest,res:NextApiResp
                 return
             }
             if(positionNum.every(x=>typeof x === "number")){
-                const result = await prisma.townMap2308.create({
-                    data:{
-                        userName:userName,
-                        playerName:playerName,
-                        steamName:steamName,
-                        address:address,
-                        phoneNumber:phoneNumber,
-                        description:description,
-                        SNS:SNS,
-                        image:image,
-                        position:positionNum,
-                        UUID:UUID
-                    }
-                    
-                })
+                let result;
+                if(update){
+                    result = await prisma.townMap2308.update({
+                        where:{
+                            id:Number(update)
+                        },
+                        data:{
+                            userName:userName,
+                            playerName:playerName,
+                            steamName:steamName,
+                            address:address,
+                            phoneNumber:phoneNumber,
+                            description:description,
+                            SNS:SNS,
+                            image:image,
+                            position:positionNum,
+                            UUID:UUID
+                        }   
+                    })
+                }else{
+                    result = await prisma.townMap2308.create({
+                        data:{
+                            userName:userName,
+                            playerName:playerName,
+                            steamName:steamName,
+                            address:address,
+                            phoneNumber:phoneNumber,
+                            description:description,
+                            SNS:SNS,
+                            image:image,
+                            position:positionNum,
+                            UUID:UUID
+                        }   
+                    })
+                }
                 res.send(JSON.stringify({
                     type:"success",
-                    body:result.id,
+                    body:result?.id,
                     UUID:UUID
                 }))
             }

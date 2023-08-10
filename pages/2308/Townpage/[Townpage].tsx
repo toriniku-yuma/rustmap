@@ -35,18 +35,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         UUID:true
       }
     })
-    if(!monument?.image){
-      return {
-        props: {
-          body:undefined
-        }
-      }
-    }
-    if(monument?.image === ""){
+    if(!monument?.image||monument?.image === ""){
       return {
         props:{
           body:monument,
-          imageURL:undefined
+          imageURL:null
         }
       }
     }
@@ -65,6 +58,7 @@ const Monument = (props:Props) => {
   const [positionXY,setPositionXY] = useState<number[]>([])
   const [deleteBool,setDeleteBool] = useState<boolean>(false)
   const descriptionURL = ()=>{return(<div>{reactStringReplace(description,/(https?:\/\/\S+)/g,(match,i)=>(<img key={i} src={match} className=' max-w-[50%] inline-block mt-2'></img>))}</div>)}
+  const SNSURL = ()=>{return(<div>{reactStringReplace(SNS,/(https?:\/\/\S+)/g,(match,i)=>(<a key={i} href={match} target="_blank" rel="noopener" className=' underline'>{match}</a>))}</div>)}
   useEffect(()=>{
     const getUUID = localStorage.getItem("UUID");
     uuidCheck();
@@ -110,28 +104,11 @@ const Monument = (props:Props) => {
       })
     })
   },[])
-  async function likeButton(){
-    const result = await fetch("./api/like",{
-      method:"POST",
-      body:JSON.stringify({
-        id:id,
-        uuid:localStorage.getItem("UUID")
-      })
-    })
-    const resultText = await result.text();
-    if(resultText === "success"){
-      setLikeLength(likeLength + 1);
-      setLikeBool(true);
-    }else if(resultText === "error"){
-      console.log("error")
-    }else{
-      console.log("undefined")
-    }
-  }
   async function deleteAction(){
-    const res = await fetch("/api/delete",{
+    const res = await fetch("../../api/2308/delete",{
       method:"POST",
       body:JSON.stringify({
+        deleteType:0,
         id:id,
         uuid:localStorage.getItem("UUID")
       })
@@ -150,7 +127,6 @@ const Monument = (props:Props) => {
         <div>404 notFound</div>
       </div>
       <div className=' flex flex-col text-center items-center'>
-        <div className=' text-xl m-4 font-bold'>{name}</div>
         <div className=' flex lg:flex-row flex-col'>
           <div className=' 2xl:w-[64rem] 2xl:h-[36rem] w-[70vw] h-[39vw] bg-base-200 relative'>
             <img src={props.imageURL} className=' w-full h-full object-contain absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'/>
@@ -161,13 +137,21 @@ const Monument = (props:Props) => {
               style={{top:positionXY[1]-25+"px",left:positionXY[0]-14+"px"}}/>
               <Image src="/map.png" alt="" width={384} height={384} id='map'/>
             </div>
-            <div className=' mb-2'><span className=' font-bold'>制作者</span>:{autherName}</div>
+            <div className=' mb-2'><span className=' font-bold'>ユーザー名</span>:{userName}</div>
+            <div className=' mb-2'><span className=' font-bold'>ゲーム内名</span>:{playerName}</div>
+            <div className=' mb-2'><span className=' font-bold'>Steam64ID</span>:{steamName}</div>
             <div className=' mb-2'><span className=' font-bold'>住所</span>:{address}</div>
+            <div className=' mb-2'><span className=' font-bold'>電話番号</span>:{phoneNumber}</div>
             <div className=' flex justify-center'>
-              {likeBool
-                ?<button className='btn btn-success no-animation'>いいね済み {likeLength.toString()}</button>
-                :<button className='btn btn-secondary' onClick={likeButton}>いいね {likeLength.toString()}</button>}
-              {deleteBool&&<label htmlFor="my-modal" className='btn btn-error ml-3'>!記事を消去!</label>}
+              {deleteBool&&
+                <>
+                  <div>
+                    <label htmlFor="my-modal" className='btn btn-error ml-3'>!記事を消去!</label>
+                  </div>
+                  <div>
+                    <a href={`./Post?mode=edit&id=${id}`} className='btn btn-success ml-3'>内容を変更</a>
+                  </div>
+                </>}
             </div>
             <input type="checkbox" id="my-modal" className="modal-toggle" />
               <div className="modal">
@@ -182,6 +166,8 @@ const Monument = (props:Props) => {
               </div>
           </div>
         </div>
+        <div className=' mt-4 font-bold text-xl'>SNSリンク</div>
+        <div className='whitespace-pre-wrap break-words mt-2'>{SNSURL()}</div>
         <div className=' mt-4 font-bold text-xl'>説明</div>
         <div className='whitespace-pre-wrap break-words mt-2'>{descriptionURL()}</div>
         <div className=' h-28'></div>
