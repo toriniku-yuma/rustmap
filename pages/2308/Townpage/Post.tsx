@@ -336,7 +336,7 @@ export default function Post(props:Props) {
             <div className="relative">
                 {position&&<Image src={"/pin_yellow.png"} alt="" width={30} height={30} className=" absolute" 
                 style={{top:positionSetY-25+"px",left:positionSetX-14+"px"}}/>}
-                <Image src="/map.png" alt="" width={1200} height={1200}
+                <Image src="/2308/map.png" alt="" width={1200} height={1200}
                 onClick={handleClick} id="map"/>
             </div>
             <div id="error" className="fixed alert alert-error shadow-lg w-1/3 left-1/2 -translate-x-1/2" style={{

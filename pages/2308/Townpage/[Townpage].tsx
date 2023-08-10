@@ -131,13 +131,16 @@ const Monument = (props:Props) => {
       <div className=' flex flex-col text-center items-center'>
         <div className=' flex lg:flex-row flex-col'>
           <div className=' 2xl:w-[64rem] 2xl:h-[36rem] w-[70vw] h-[39vw] bg-base-200 relative'>
-            <img src={props.imageURL} className=' w-full h-full object-contain absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'/>
+            {props.imageURL
+              ?<img src={props.imageURL} className=' w-full h-full object-contain absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'/>
+              :<img src="/2308/notImage.png" className=' w-full h-full object-contain absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'/>
+            }
           </div>
           <div>
             <div className=' 2xl:w-[24rem] 2xl:h-[24rem] lg:w-[18rem] lg:h-[18rem] w-[35vw] h-[35vw] bg-secondary relative mx-auto'>
               <Image src={"/pin_red.png"} alt="" width={30} height={30} className=" absolute z-10" 
               style={{top:positionXY[1]-25+"px",left:positionXY[0]-14+"px"}}/>
-              <Image src="/map.png" alt="" width={384} height={384} id='map'/>
+              <Image src="/2308/map.png" alt="" width={384} height={384} id='map'/>
             </div>
             <div className=' mb-2'><span className=' font-bold'>ユーザー名</span>:{userName}</div>
             <div className=' mb-2'><span className=' font-bold'>ゲーム内名</span>:{playerName}</div>
