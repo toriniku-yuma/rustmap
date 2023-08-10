@@ -26,7 +26,7 @@ export default async function postTownMap2308(req:NextApiRequest,res:NextApiResp
         }else{
             console.log(fields);
             console.log(files)
-            let {update,userName,playerName,steamName,address,phoneNumber,description,SNS,position,UUID} = fields;
+            let {update,userName,playerName,steamName,address,group,phoneNumber,description,SNS,position,UUID} = fields;
             let image:string;
             if(typeof fields.image !== "string"){
                 const imagedata = files.image as formidable.File;
@@ -78,7 +78,7 @@ export default async function postTownMap2308(req:NextApiRequest,res:NextApiResp
             if(Array.isArray(UUID)){
                 return
             }
-            if(typeof userName !== "string"||typeof playerName !== "string"||typeof steamName !== "string"||typeof address !== "string"||typeof phoneNumber !== "string"||typeof description !== "string"||typeof SNS !== "string"){
+            if(typeof userName !== "string"||typeof playerName !== "string"||typeof steamName !== "string"||typeof group !== "string"||typeof address !== "string"||typeof phoneNumber !== "string"||typeof description !== "string"||typeof SNS !== "string"){
                 return
             }
             if(positionNum.every(x=>typeof x === "number")){
@@ -92,6 +92,7 @@ export default async function postTownMap2308(req:NextApiRequest,res:NextApiResp
                             userName:userName,
                             playerName:playerName,
                             steamName:steamName,
+                            group:group,
                             address:address,
                             phoneNumber:phoneNumber,
                             description:description,
@@ -108,6 +109,7 @@ export default async function postTownMap2308(req:NextApiRequest,res:NextApiResp
                             playerName:playerName,
                             steamName:steamName,
                             address:address,
+                            group:group,
                             phoneNumber:phoneNumber,
                             description:description,
                             SNS:SNS,

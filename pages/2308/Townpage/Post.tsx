@@ -27,6 +27,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         userName:true,
         playerName:true,
         steamName:true,
+        group:true,
         address:true,
         phoneNumber:true,
         description:true,
@@ -60,6 +61,7 @@ export default function Post(props:Props) {
     const [address,setAddress] = useState<string>("");
     const [phoneNumber,setPhoneNumber] = useState<string>("");
     const [playerName,setPlayerName] = useState<string>("");
+    const [group,setGroup] = useState<string>("");
     const [monumentPhoto,setMonumentPhoto] = useState<File>();
     const [description,setDescription] = useState<string>("");
     const [SNS,setSNS] = useState<string>("");
@@ -68,6 +70,7 @@ export default function Post(props:Props) {
     const refAddress = useRef<HTMLInputElement>(null);
     const refPhoneNumber = useRef<HTMLInputElement>(null);
     const refPlayerName = useRef<HTMLInputElement>(null);
+    const refGroup = useRef<HTMLInputElement>(null);
     const refDescription = useRef<HTMLTextAreaElement>(null);
     const refSNS = useRef<HTMLTextAreaElement>(null);
     const [errorMessage,setErrorMessage] = useState<string>();
@@ -96,6 +99,7 @@ export default function Post(props:Props) {
         setUserName(postData.userName);
         setPlayerName(postData.playerName);
         setSteamName(postData.steamName);
+        setGroup(postData.group)
         setAddress(postData.address);
         setPhoneNumber(postData.phoneNumber);
         setDescription(postData.description);
@@ -167,6 +171,11 @@ export default function Post(props:Props) {
       if(steamName === ""){
         setErrorMessage("Steam64IDが入っていません")
         return
+      }
+      if(group === ""){
+        fd.append("group","")
+      }else{
+        fd.append("group",group);
       }
       if(address === ""){
         fd.append("address","")
@@ -272,6 +281,13 @@ export default function Post(props:Props) {
               </label>
                 <input type="text" ref={refSteamName} placeholder="" className="input input-bordered w-full max-w-md" 
                 onChange={(e)=>setSteamName(e.target.value)}/>
+            </div>
+            <div className="form-control w-full max-w-md">
+              <label className="label">
+                <span className="label-text text-lg">所属グループ</span>
+              </label>
+                <input type="text" ref={refAddress} placeholder="" className="input input-bordered w-full max-w-md" 
+                onChange={(e)=>setGroup(e.target.value)}/>
             </div>
             <div className="form-control w-full max-w-md">
               <label className="label">

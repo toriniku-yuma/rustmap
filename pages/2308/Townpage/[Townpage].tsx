@@ -26,6 +26,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         userName:true,
         playerName:true,
         steamName:true,
+        group:true,
         address:true,
         phoneNumber:true,
         description:true,
@@ -52,7 +53,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 }
 
 const Monument = (props:Props) => {
-  const {id,userName,playerName,steamName,address,phoneNumber,description,SNS,position,UUID} = props.body
+  const {id,userName,playerName,steamName,group,address,phoneNumber,description,SNS,position,UUID} = props.body
   const [notFound,setNotFound] = useState<string>();
   const [likeBool,setLikeBool] = useState<boolean>(false)
   const [positionXY,setPositionXY] = useState<number[]>([])
@@ -140,6 +141,7 @@ const Monument = (props:Props) => {
             <div className=' mb-2'><span className=' font-bold'>ユーザー名</span>:{userName}</div>
             <div className=' mb-2'><span className=' font-bold'>ゲーム内名</span>:{playerName}</div>
             <div className=' mb-2'><span className=' font-bold'>Steam64ID</span>:{steamName}</div>
+            <div className=' mb-2'><span className=' font-bold'>所属グループ</span>:{group}</div>
             <div className=' mb-2'><span className=' font-bold'>住所</span>:{address}</div>
             <div className=' mb-2'><span className=' font-bold'>電話番号</span>:{phoneNumber}</div>
             <div className=' flex justify-center'>
