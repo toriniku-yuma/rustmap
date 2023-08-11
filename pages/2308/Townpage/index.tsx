@@ -66,7 +66,7 @@ export default function Ranking(props:Props) {
                   <tbody>
                   {monumentArray.map((value,key)=>{
                     return(
-                      <tr key={key} className="hover" onClick={()=>router.push("./Townpage/"+value.id)}>
+                      <tr key={key} className="hover md:text-lg text-sm" onClick={()=>router.push("./Townpage/"+value.id)}>
                         <th className="whitespace-pre-wrap break-all">{value.userName}</th>
                         <td className="whitespace-pre-wrap break-all">{value.playerName}</td>
                         <td className="whitespace-pre-wrap break-all">{value.group}</td>

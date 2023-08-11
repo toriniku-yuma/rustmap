@@ -26,7 +26,10 @@ export default function Hedder2() {
                                         <a>トップページ</a>
                                     </Link>
                                 </li>
-                                <li className=" pl-4 py-2 text-neutral-500">タウンページ</li>
+                                <li>
+                                    <a href="https://github.com/toriniku-yuma/rustmap/wiki/%E3%82%B9%E3%83%A9%E3%83%A0Rust%E3%82%B5%E3%83%BC%E3%83%90%E3%83%BC2308%E3%83%AB%E3%83%BC%E3%83%AB%E3%83%96%E3%83%83%E3%82%AF" target="_blank" rel="noopener">ルールブック</a>
+                                </li>
+                                <li className=" pl-4 py-2 text-neutral-400">タウンページ</li>
                                 <li className=" pl-9">
                                     <Link href="/2308/Townpage" legacyBehavior>
                                         <a>一覧</a>
