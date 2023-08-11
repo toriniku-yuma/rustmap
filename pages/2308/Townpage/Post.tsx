@@ -82,6 +82,7 @@ export default function Post(props:Props) {
     let positionSetX = 0;
     let positionSetY = 0;
     let [subPosition,setSubPosition] = useState<number[]>([]);
+    const router = useRouter();
     useEffect(()=>{
       console.log(props)
       const element = document.getElementById("map");
@@ -227,7 +228,7 @@ export default function Post(props:Props) {
         if(!localStorage.getItem('UUID')){
           localStorage.setItem('UUID', resId.UUID);
         }
-        location.href = "/2308/Townpage/"+ resId.body;
+        router.push("/2308/Townpage/"+ resId.body);
       }else if(resId.type === "error"){
         setErrorMessage(resId.body)
         console.log(resId.type,resId.body)

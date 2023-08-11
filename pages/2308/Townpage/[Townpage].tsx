@@ -8,6 +8,7 @@ import { env } from 'process';
 import reactStringReplace from 'react-string-replace';
 import Hedder2 from '../../../components/Hedder2';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const supabase = createClient(env.NEXT_PUBLIC_SUPABASE_URL,env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
@@ -61,6 +62,7 @@ const Monument = (props:Props) => {
   const [deleteBool,setDeleteBool] = useState<boolean>(false)
   const descriptionURL = ()=>{return(<div>{reactStringReplace(description,/(https?:\/\/\S+)/g,(match,i)=>(<img key={i} src={match} className=' max-w-[50%] inline-block mt-2'></img>))}</div>)}
   const SNSURL = ()=>{return(<div>{reactStringReplace(SNS,/(https?:\/\/\S+)/g,(match,i)=>(<a key={i} href={match} target="_blank" rel="noopener" className=' underline'>{match}</a>))}</div>)}
+  const router = useRouter();
   useEffect(()=>{
     const getUUID = localStorage.getItem("UUID");
     uuidCheck();
@@ -117,7 +119,7 @@ const Monument = (props:Props) => {
     })
     const resText = await res.text(); 
     if(resText === "success"){
-      location.href = "/";
+      router.push("../");
     }else{
       console.log(resText)
     }
