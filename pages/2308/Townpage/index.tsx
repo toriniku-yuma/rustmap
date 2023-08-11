@@ -4,6 +4,7 @@ import { GetServerSideProps } from "next";
 import { env } from "process";
 import prisma from "../../../utils/prisma";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export const getServerSideProps:GetServerSideProps = async() =>{
   const supabase = createClient(env.NEXT_PUBLIC_SUPABASE_URL,env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
@@ -46,24 +47,35 @@ export type Props = {
 
 export default function Ranking(props:Props) {
   const monumentArray = props.body;
+  const router = useRouter();
   return (
       <div>
           <Hedder2/>
           <div className=" flex flex-col text-center items-center text-lg">
               <div className=" font-bold text-2xl my-4">タウンページ</div>
-              <div className=" flex flex-col">
+              <div className="overflow-x-auto md:w-auto w-11/12">
+                <table className="table">
+                  <thead>
+                    <tr>
+                      <th>名前</th>
+                      <th>ゲーム内名</th>
+                      <th>所属グループ</th>
+                      <th>住所</th>
+                    </tr>
+                  </thead>
+                  <tbody>
                   {monumentArray.map((value,key)=>{
                     return(
-                      <div key={key} className=" flex text-left items-start mt-5">
-                        <Link href={"/2308/Townpage/"+value.id} legacyBehavior>
-                          <a className="mr-4">{value.userName}</a>
-                        </Link>
-                        <div className="mr-4">{value.playerName}</div>
-                        <div className="mr-4">{value.group}</div>
-                        <div className="mr-4">{value.address}</div>
-                      </div>
+                      <tr key={key} className="hover" onClick={()=>router.push("./Townpage/"+value.id)}>
+                        <th>{value.userName}</th>
+                        <td>{value.playerName}</td>
+                        <td>{value.group}</td>
+                        <td>{value.address}</td>
+                      </tr>
                     )
                   })}
+                  </tbody>
+                </table>
               </div>
           </div>
       </div>
